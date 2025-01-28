@@ -1,6 +1,6 @@
 ## Getting Started
 
-# 1 Clone the repo
+## 1 Clone the repo
 ```bash
 git clone https://github.com/Hope-Dies-Here/random-blog.git
 ```
