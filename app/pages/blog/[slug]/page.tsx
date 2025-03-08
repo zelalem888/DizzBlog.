@@ -1,9 +1,9 @@
 "use client";
 import * as React from "react";
-import AsideBar from "../../../components/AsideBar";
+// import AsideBar from "../../../components/AsideBar";
 import { useState, useEffect } from "react";
 import { CldImage } from "next-cloudinary";
-import MainContent from "../../../components/mainContent";
+// import MainContent from "../../../components/mainContent";
 import Sidebar from "../../../components/AsideBar";
 import { useParams } from "next/navigation";
 
@@ -14,7 +14,7 @@ interface Post {
   description: string;
   createdAt: string;
   publicId: string;
-  authorName: String;
+  authorName: string;
 }
 export const formatDate = (isoString: string) => {
   return new Date(isoString).toLocaleString("en-US", {
@@ -39,7 +39,7 @@ const  SinglePost = () => {
 
   // Separate ID and title (assuming they are joined with a "-")
   const [id, ...titleParts] = decodedSlug.split("-");
-  const title = titleParts.join("-"); // Reconstruct title (not being used yet)
+  // const title = titleParts.join("-"); // Reconstruct title (not being used yet)
 
   useEffect(() => {
     const fetchBlogPost = async () => {

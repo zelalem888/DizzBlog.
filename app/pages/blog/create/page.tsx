@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CldUploadWidget, CldImage } from "next-cloudinary";
-import Link from "next/link";
+// import Link from "next/link";
 
 interface ImageResult {
   public_id: string;
