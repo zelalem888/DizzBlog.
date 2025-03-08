@@ -38,7 +38,7 @@ const  SinglePost = () => {
   const decodedSlug = (decodeURIComponent(params.slug as string));
 
   // Separate ID and title (assuming they are joined with a "-")
-  const [id, ...titleParts] = decodedSlug.split("-");
+  const [id] = decodedSlug.split("-");
   // const title = titleParts.join("-"); // Reconstruct title (not being used yet)
 
   useEffect(() => {

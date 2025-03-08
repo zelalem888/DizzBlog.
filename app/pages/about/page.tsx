@@ -14,7 +14,7 @@ const AboutPage = () => {
           you share your thoughts, ideas, and insights with the world.
         </p>
         <p className="text-lg text-gray-700 mt-4">
-          Whether you're passionate about news, culture, technology, lifestyle,
+          Whether you&apos;'re passionate about news, culture, technology, lifestyle,
           or any other topic, we are thrilled to provide a platform where your
           ideas can shine. Our mission is to create a community-driven space
           where diverse voices come together to inspire, inform, and connect
@@ -23,7 +23,7 @@ const AboutPage = () => {
         <p className="text-lg text-gray-700 mt-4">
           Here at DizzNews, your stories are powerful. We encourage you to
           express yourself freely, spark meaningful conversations, and make an
-          impact. Whether you're an aspiring writer, a seasoned journalist, or
+          impact. Whether you&apos;'re an aspiring writer, a seasoned journalist, or
           simply someone with a story to tell, this is your place to be heard.
         </p>
       </div>

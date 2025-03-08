@@ -19,7 +19,7 @@ export default function MainContent() {
           <div className="text-[#02234d] text-base font-medium">by Alex House</div>
           {/* Article Image */}
           <div className="w-full h-[446px]">
-            <img src="https://placehold.co/670x446" alt="News Image" className="w-full h-full object-cover" />
+            {/* <img src="https://placehold.co/670x446" alt="News Image" className="w-full h-full object-cover" /> */}
           </div>
           {/* Article Content */}
           <div className="text-[#02234d] text-base leading-tight">

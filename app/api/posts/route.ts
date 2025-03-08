@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/prisma/client";
 import { auth } from "@/app/auth";
-import { JWT } from "next-auth/jwt";
+// import { JWT } from "next-auth/jwt";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
     const [vlogs,user] = await Promise.all([
         prisma.vlog.findMany(),
         prisma.user.findMany()
