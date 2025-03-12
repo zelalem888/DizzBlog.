@@ -40,6 +40,7 @@ const SinglePost = () => {
   // Separate ID and title (assuming they are joined with a "-")
   const [id] = decodedSlug.split("-");
   // const title = titleParts.join("-"); // Reconstruct title (not being used yet)
+console.log(id);
 
   useEffect(() => {
     const fetchBlogPost = async () => {
