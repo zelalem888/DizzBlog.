@@ -24,10 +24,9 @@ export async function GET(
 
 export async function GET(
     request: NextRequest,
-    { params}: any
+    { params }: { params: { id: string } }
   ) {
     try {
-      // const params = { id: '6' }
       // Parse the ID from params
       const paramsId = params.id;
   
@@ -97,17 +96,15 @@ export async function GET(
 }
 
 
-export async function PUT(request :NextRequest,
-  {params} : any
-  ){
+export async function PUT(request :NextRequest,{params }: {params : {id : string}}){
     const body = await request.json();
-      // const params = { id: '6' }
 
     const getUser = await prisma.vlog.findUnique({
-        where: { id : parseInt(params.id) }
+        where: {id : parseInt(params.id)}
     })
 
     if(!getUser)
+        return NextResponse.json({error: "invalid request!"},{status:400})
         return NextResponse.json({ error: "invalid request!" },{ status:400 })
 
     const updateUser = await prisma.vlog.update({
