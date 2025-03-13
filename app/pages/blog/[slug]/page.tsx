@@ -16,7 +16,7 @@ interface Post {
   publicId: string;
   authorName: string;
 }
-export const formatDate = (isoString: string) => {
+const formatDate = (isoString: string) => {
   return new Date(isoString).toLocaleString("en-US", {
     year: "numeric",
     month: "long",
@@ -27,7 +27,7 @@ export const formatDate = (isoString: string) => {
   });
 };
 
-const  SinglePost = () => {
+const SinglePost = () => {
   const params = useParams()
   const [blogPost, setBlogPost] = useState<Post | null>(null); // Single post, not an array
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -40,7 +40,6 @@ const  SinglePost = () => {
   // Separate ID and title (assuming they are joined with a "-")
   const [id] = decodedSlug.split("-");
   // const title = titleParts.join("-"); // Reconstruct title (not being used yet)
-console.log(id);
 
   useEffect(() => {
     const fetchBlogPost = async () => {
