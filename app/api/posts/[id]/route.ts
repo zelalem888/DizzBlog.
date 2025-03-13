@@ -59,20 +59,31 @@ export async function GET(
       );
     }
   }
+
   
 
 export async function PUT(request :NextRequest,
   {params} : any
   ){
+
     const body = await request.json();
-      // const params = { id: '6' }
+    const paramsId = parseInt(params.id);
+
+    if (isNaN(paramsId)) {
+      return NextResponse.json(
+        { error: "Invalid post ID" },
+        { status: 400 }
+      );
+    }
 
     const getUser = await prisma.vlog.findUnique({
-        where: { id : parseInt(params.id) }
-    })
+      where: { id: paramsId },
+    });
+
 
     if(!getUser)
         return NextResponse.json({ error: "invalid request!" },{ status:400 })
+
     const updateUser = await prisma.vlog.update({
         where: {id : getUser.id},
         data:{
