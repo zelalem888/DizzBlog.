@@ -5,7 +5,6 @@ import Link from "next/link";
 interface Vlog {
   id: number;
   authorId: string;
-  autor: string;
   title: string;
   description: string;
   createdAt: string;
