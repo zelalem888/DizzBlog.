@@ -105,8 +105,6 @@ export async function PUT(request :NextRequest,{params }: {params : {id : string
 
     if(!getUser)
         return NextResponse.json({error: "invalid request!"},{status:400})
-        return NextResponse.json({ error: "invalid request!" },{ status:400 })
-
     const updateUser = await prisma.vlog.update({
       where: { id: getUser.id },
       data: {
