@@ -22,57 +22,25 @@ export async function GET(
       },
     });
 
-export async function GET(
-    request: NextRequest,
-    { params}: any
-  ) {
-    try {
-      // const params = { id: '6' }
-      // Parse the ID from params
-      const paramsId = params.id;
-  
-      // Fetch the vlog from the database using authorId
-      const vlog = await prisma.vlog.findFirst({
-        where: {
-          id: parseInt(paramsId) , // Use findFirst instead of findUnique
-        },
-      });
-  
-      // If the vlog is not found, return a 404 error
-      if (!vlog) {
-        return NextResponse.json(
-          { error: "Post not found" },
-          { status: 404 }
-        );
-      }
-      const authorId = vlog.authorId
-  
-      // Fetch the user (author) associated with the vlog
-      const user = await prisma.user.findUnique({
-        where: {
-          id: authorId,
-        },
-      });
-  
-      // If the user is not found, return a 404 error
-      if (!user) {
-        return NextResponse.json(
-          { error: "Author not found" },
-          { status: 404 }
-        );
-      }
-  
-      // Combine vlog and user data
-      const response = {
-        ...vlog,
-        authorName: user.name, // Add the author's name to the response
-      };
-  
-      // Return the combined data
-      return NextResponse.json(response, { status: 200 });
-    } catch (error) {
-      console.error("Failed to fetch post:", error);
+    // If the vlog is not found, return a 404 error
+    if (!vlog) {
+      return NextResponse.json(
+        { error: "Post not found" },
+        { status: 404 }
+      );
+    }
 
+    const authorId = vlog.authorId;
+
+    // Fetch the user (author) associated with the vlog
+    const user = await prisma.user.findUnique({
+      where: {
+        id: authorId,
+      },
+    });
+
+    // If the user is not found, return a 404 error
+    if (!user) {
       return NextResponse.json(
         { error: "Author not found" },
         { status: 404 }
@@ -96,19 +64,31 @@ export async function GET(
   }
 }
 
-
-export async function PUT(request :NextRequest,
-  {params} : any
-  ){
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
     const body = await request.json();
-      // const params = { id: '6' }
+    const paramsId = parseInt(params.id);
+
+    if (isNaN(paramsId)) {
+      return NextResponse.json(
+        { error: "Invalid post ID" },
+        { status: 400 }
+      );
+    }
 
     const getUser = await prisma.vlog.findUnique({
-        where: { id : parseInt(params.id) }
-    })
+      where: { id: paramsId },
+    });
 
-    if(!getUser)
-        return NextResponse.json({ error: "invalid request!" },{ status:400 })
+    if (!getUser) {
+      return NextResponse.json(
+        { error: "Post not found" },
+        { status: 404 }
+      );
+    }
 
     const updateUser = await prisma.vlog.update({
       where: { id: getUser.id },

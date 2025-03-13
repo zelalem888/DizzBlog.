@@ -16,7 +16,7 @@ interface Post {
   publicId: string;
   authorName: string;
 }
-const formatDate = (isoString: string) => {
+export const formatDate = (isoString: string) => {
   return new Date(isoString).toLocaleString("en-US", {
     year: "numeric",
     month: "long",
@@ -27,7 +27,7 @@ const formatDate = (isoString: string) => {
   });
 };
 
-const SinglePost = () => {
+const  SinglePost = () => {
   const params = useParams()
   const [blogPost, setBlogPost] = useState<Post | null>(null); // Single post, not an array
   const [isLoading, setIsLoading] = useState<boolean>(true);
