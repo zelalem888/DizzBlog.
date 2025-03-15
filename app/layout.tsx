@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from './components/Navbar'
+import Navbar from "./components/Navbar";
 import Footer from "./components/footer";
 import { SessionProvider } from "next-auth/react";
 
@@ -27,15 +27,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      <head>
+      <link rel="icon" href="/icon?<generated>" type="image/png" sizes="32x32" />
+      </head>
+     <body
+      // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SessionProvider>
-        <Navbar />
-        <main>
-          {children}
-        </main>
-        <Footer />
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
         </SessionProvider>
       </body>
     </html>
