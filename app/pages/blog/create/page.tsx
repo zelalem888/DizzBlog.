@@ -13,7 +13,7 @@ const CreateBlog = () => {
   const [publicId, setPublicId] = useState<string[]>([]);
 // { redirect to other page after post button pressed }
 
-  const redirect = useRouter()
+const redirect = useRouter()
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -21,7 +21,7 @@ const CreateBlog = () => {
   const handleSubmit = async (e: React.FormEvent) => {
    
     e.preventDefault();
-    const response = await fetch("http://localhost:3000/api/posts/", {
+    const response = await fetch("/api/posts/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...formData, images: publicId }),
@@ -80,6 +80,7 @@ const CreateBlog = () => {
                 const info = result.info as ImageResult;
                 setPublicId((prev) => [...prev, info.public_id]);
               }}
+
             >
               {({ open }) => (
                 <button
