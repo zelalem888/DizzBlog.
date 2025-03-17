@@ -13,12 +13,13 @@ const CreateBlog = () => {
   const [publicId, setPublicId] = useState<string[]>([]);
 // { redirect to other page after post button pressed }
 
-
+  const redirect = useRouter()
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
+   
     e.preventDefault();
     const response = await fetch("http://localhost:3000/api/posts/", {
       method: "POST",
@@ -28,15 +29,17 @@ const CreateBlog = () => {
 
     if (response.ok) {
       alert("Form submitted successfully!");
+      
+     
+        redirect.push("/pages")
+      
     } else {
       alert("Something went wrong.");
     }
   };
 
-  const redirect = useRouter()
-  const handleRedirect = (()=>{
-    redirect.push("/pages")
-  })
+  
+
 
   return (
     <div className="col-span-3 min-h-screen py-8 -my-28 mt-1 mb-8">
@@ -94,7 +97,6 @@ const CreateBlog = () => {
          
           <button
             type="submit"
-            onClick={handleRedirect}
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Post
