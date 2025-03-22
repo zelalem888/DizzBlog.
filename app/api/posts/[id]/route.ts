@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/prisma/client";
 
 
-
+// getting vlog data
 export async function GET(
     request: NextRequest,
     { params}: any
@@ -60,7 +60,7 @@ export async function GET(
     }
   }
 
-  
+  //updating vlog data
 
 export async function PUT(request :NextRequest,
   {params} : any
@@ -93,4 +93,28 @@ export async function PUT(request :NextRequest,
     })
     return NextResponse.json(updateUser, {status : 200})  
 
+}
+
+// Deleting vlog data
+
+export async function DELETE(request : NextRequest ,{params} : any) {
+
+
+  const deleteUser = await params
+  const findUser  = await prisma.vlog.findFirst({
+    where : {
+      id : parseInt(deleteUser.id)
+    }
+  }
+  )
+  if(!findUser)
+    return NextResponse.json('user not found',{status : 404})
+
+  await prisma.vlog.delete({
+    where:{
+      id : findUser.id
+    }
+  })
+  return NextResponse.json('Data Deleted!' , {status : 200})
+  
 }

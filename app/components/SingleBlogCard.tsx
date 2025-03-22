@@ -23,7 +23,7 @@ interface BlogCardProps {
   users: User[]; // Add users as a prop
 }
 
-const BlogCard = ({ post, users }: BlogCardProps) => {
+const SingleBlogCard = ({ post, users }: BlogCardProps) => {
   const truncatedDescription =
     post.description.length > 200
       ? post.description.slice(0, 200) + "..."
@@ -39,11 +39,11 @@ const BlogCard = ({ post, users }: BlogCardProps) => {
         {/* Title */}
         <h1 className="text-[#02234d] text-3xl font-bold leading-[39px] mb-2">
           {post.title}
+          {}
         </h1>
         <div className="text-base font-medium">
           Author -{" "}
           <span className="text-base font-bold text-blue-600 dark:text-black-400 italic font-[Ubuntu]">
-            {authorName}
           </span>
         </div>
       </Link>
@@ -65,8 +65,8 @@ const BlogCard = ({ post, users }: BlogCardProps) => {
               Read More
             </Link>
           )}
+          
           </div>
-
         {/* Image */}
         {post.publicId && post.publicId.length > 0 ? (
           <div className="w-full lg:w-[200px] h-[150px]">
@@ -86,4 +86,4 @@ const BlogCard = ({ post, users }: BlogCardProps) => {
   );
 };
 
-export default BlogCard;
+export default SingleBlogCard;

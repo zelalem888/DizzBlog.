@@ -36,7 +36,6 @@ const AsideBar = () => {
         if (!response.ok) throw new Error("Failed to fetch blog posts");
 
         const data: ApiResponse = await response.json();
-        console.log("API Response:", data); // Log the response
 
         // Check if vlogs and user are defined
         if (!data.vlogs || !data.user) {
@@ -77,7 +76,7 @@ const AsideBar = () => {
       <div className="flex flex-col gap-6">
         <div className="text-[#02234d] text-3xl font-bold">More News</div>
         <div className="flex flex-col gap-6">
-          {blogPosts.map((post) => (
+          {blogPosts.slice(-3).reverse().map((post) => (
             <div key={post.id} className="flex gap-6 py-6">
               <div className="w-[140px] h-[120px]">
                 {post.publicId && post.publicId.length > 0 ? (

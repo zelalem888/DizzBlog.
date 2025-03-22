@@ -5,6 +5,10 @@ import BlogCard from "../components/BlogCard";
 // import CreateBlogButton from "../components/CreateBlogButton";
 // import { CldImage } from "next-cloudinary";
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { log } from "console";
+import SingleBlogCard from "../components/SingleBlogCard";
+import ModalComponent from "../components/deleteBlog";
 
 interface Post {
   id: number;
@@ -21,11 +25,14 @@ interface User {
   email: string;
   image: string;
 }
-
 interface ApiResponse {
-  vlogs: Post[];
-  user: User[];
+  response: {
+    Vlog: Post[]; 
+    user: User;
+  };
 }
+
+
 
 const BlogsPage = () => {
   const [blogPosts, setBlogPosts] = useState<Post[]>([]);
@@ -33,36 +40,62 @@ const BlogsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const{status, data: session}= useSession()
+
   useEffect(() => {
     const fetchBlogPosts = async () => {
-      try {
-        const response = await fetch("/api/posts");
-        if (!response.ok) throw new Error("Failed to fetch blog posts");
-
-        const data: ApiResponse = await response.json();
-        console.log("API Response:", data); // Log the response
-
-        // Check if vlogs and user are defined
-        if (!data.vlogs || !data.user) {
-          throw new Error("Invalid data structure in API response");
+      if (status === 'authenticated') {
+        const user = session?.user?.email;
+        if (!user) return;
+  
+        try {
+          const response = await fetch(`/api/users/${user}`);
+          if (!response.ok) throw new Error("Failed to fetch blog posts");
+  
+          const data: ApiResponse = await response.json();
+          const userData = data.response;
+          const oneUser = userData.user;
+          const blogPosts = userData.Vlog;
+  
+          setUsers([oneUser]);
+          setBlogPosts(blogPosts);
+  
+        } catch (error) {
+          console.error(error);
+          setError(error instanceof Error ? error.message : "An error occurred");
+        } finally {
+          setLoading(false);
         }
-
-        // Set the vlogs and users
-        setBlogPosts(data.vlogs);
-        setUsers(data.user);
-      } catch (error) {
-        console.error(error);
-        setError(error instanceof Error ? error.message : "An error occurred");
-      } finally {
-        setLoading(false);
       }
     };
-
+  
     fetchBlogPosts();
-  }, []);
+  }, [status, session]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#ecf2fa]">
+        <div role="status">
+          <svg
+            aria-hidden="true"
+            className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+            viewBox="0 0 100 101"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="currentColor"
+            />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentFill"
+            />
+          </svg>
+          <span className="sr-only">Loading...</span>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
@@ -72,8 +105,11 @@ const BlogsPage = () => {
   return (
     <>
       <div className="grid h-fit gap-5">
-        {blogPosts.map((post) => (
-          <BlogCard post={post} users={users} key={post.id} />
+        {blogPosts.toReversed().map((post) => (
+          <div key={post.id}>
+            <SingleBlogCard post={post} users={users} key={post.id} />
+            <ModalComponent post={post} />  
+          </div>
         ))}
       </div>
     </>

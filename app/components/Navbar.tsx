@@ -69,7 +69,7 @@ export default function Navbar() {
           </div>
           }
           {status === 'authenticated' &&  <div className="text-white text-sm cursor-pointer hover:text-[#f2994a] transition-colors duration-300">
-            <Link href="/pages/">my page</Link>
+            <Link href="/pages/">My Page</Link>
            
           </div>}
           {status === 'authenticated' && <div className="text-white text-sm">
