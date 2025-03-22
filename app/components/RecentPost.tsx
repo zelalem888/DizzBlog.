@@ -76,7 +76,7 @@ const RecentPost = () => {
   return (
     <div className="w-full bg-white p-8">
       {/* Main Content and Sidebar */}
-      <div className="flex flex-col lg:flex-row">
+      <div className="flex flex-col lg:flex-row justify-between">
         {/* Left Side: Title, Description, and Image (70% width) */}
         <div className="w-full lg:w-[70%]">
           {blogPosts.toReversed().map((post) => (
@@ -85,7 +85,7 @@ const RecentPost = () => {
         </div>
 
         {/* Right Side: Sidebar (30% width) */}
-        <div className="w-full lg:w-[30%]">
+        <div className="w-full lg:w-[25%]">
           <AsideBar />
         </div>
       </div>

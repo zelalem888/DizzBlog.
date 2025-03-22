@@ -3,6 +3,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import Sidebar from "../../../components/AsideBar";
 import { useParams } from "next/navigation";
+import { CldImage } from "next-cloudinary";
 
 interface Post {
   id: number;
@@ -105,6 +106,15 @@ const SinglePost = () => {
                 {blogPost.authorName}
               </span>
             </div>
+
+          <div>
+            <CldImage className="max-w-[500px] max-h-[600px] object-cover"
+                      src={blogPost.publicId[0]}
+                      alt="Blog Image"
+                      width={500}
+                      height={600}/>
+          </div>
+
             {/* Article Content */}
             <div
               className="not-prose leading-relaxed"

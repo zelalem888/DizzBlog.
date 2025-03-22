@@ -17,15 +17,14 @@ import {
   Underline,
   Link,
   Image,
+  FontFamily,
   Heading,
   BulletList,
   OrderedList,
   Blockquote,
   Code,
-  CodeBlock,
   TextAlign,
   History,
-  FontSize,
   HorizontalRule,
   ExportPdf,
 } from 'reactjs-tiptap-editor/extension-bundle';
@@ -34,7 +33,7 @@ import {
 import 'reactjs-tiptap-editor/style.css';
 
 // Default content for the editor
-const DEFAULT = `<h1 style="text-align: center">Rich Text Editor</h1>`;
+const DEFAULT = `<h1 style="text-align: left">Rich Text Editor</h1>`;
 
 // Configure extensions
 const extensions = [
@@ -46,12 +45,17 @@ const extensions = [
   Bold,
   Italic,
   Underline,
-  Link,
+  Link.configure({
+    HTMLAttributes:{
+      class: "text-blue-500 underline hover:text-blue-700",
+    }
+  }),
   Image.configure({
-    upload: (files: File) => {
-      const url = URL.createObjectURL(files);
-      return Promise.resolve(url);
-    },
+  resourceImage: 'link',
+  maxSize : 3,
+  }),
+  FontFamily.configure({
+    fontFamilyList:['Roboto','Inter','Source Sans Pro','Poppins','Playfair Display','ubuntu']
   }),
   Heading.configure({
     levels: [1,3],
@@ -59,14 +63,28 @@ const extensions = [
       class: 'headers font-bold text-gray-900 py-4',
     },
   }),
-  BulletList,
-  OrderedList,
-  Blockquote,
-  Code,
-  CodeBlock.configure({ defaultTheme: 'dracula' }),
-  TextAlign.configure({ types: ['heading', 'paragraph'] }),
+  BulletList.configure({
+    HTMLAttributes:{
+      class:"list-disc text-gray-700"
+    }
+  }),
+  OrderedList.configure({
+    HTMLAttributes:{
+      class: "list-decimal  text-gray-700"
+    }
+  }),
+  Blockquote.configure({
+    HTMLAttributes:{
+      class: "border-l-[3px] border-black pl-4 overflow-x-auto max-w-full"
+    }
+  }),
+  Code.configure({
+    HTMLAttributes:{
+      class: "bg-black text-white px-2 py-1 rounded-md overflow-x-auto max-w-full"
+    }
+  }),
+  TextAlign.configure({ types: ['heading', 'paragraph'], alignments:['left','center'], defaultAlignment:'left' }),
   History,
-  FontSize,
   HorizontalRule,
   ExportPdf.configure({ spacer: true }),
 ];
@@ -100,8 +118,8 @@ const Editor = ({ onContentChange }: EditorProps) => {
   );
 
   return (
-    <main style={{ padding: '0 20px' }}>
-      <div style={{ maxWidth: 1024, margin: '88px auto 120px' }}>
+    <main style={{ padding: '0' }}>
+      <div style={{ maxWidth: 1024, margin: '0px auto 20px' }}>
         <RcTiptapEditor
           output="html"
           content={DEFAULT}
@@ -110,15 +128,7 @@ const Editor = ({ onContentChange }: EditorProps) => {
           dark={theme === 'dark'}
           disabled={disable}
         />
-        <div style={{ display: 'flex', gap: '12px', marginBottom: 10 }}>
-          <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
-            Toggle {theme === 'dark' ? 'Light' : 'Dark'} Theme
-          </button>
-          <button onClick={() => setDisable(!disable)}>
-            {disable ? 'Enable Editor' : 'Disable Editor'}
-          </button>
-        </div>
-        {typeof content === 'string' && (
+        {/* {typeof content === 'string' && (
           <textarea
             readOnly
             style={{
@@ -132,7 +142,7 @@ const Editor = ({ onContentChange }: EditorProps) => {
             }}
             value={content}
           />
-        )}
+        )} */}
       </div>
     </main>
   );

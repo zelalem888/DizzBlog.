@@ -78,15 +78,15 @@ const AsideBar = () => {
         <div className="flex flex-col gap-6">
           {blogPosts.slice(-3).reverse().map((post) => (
             <div key={post.id} className="flex gap-6 py-6">
-              <div className="w-[140px] h-[120px]">
+              <div className="w-[100px] h-[80px]">
                 {post.publicId && post.publicId.length > 0 ? (
-                  <div className="w-full lg:w-[140px] h-[120px]">
+                  <div className="w-full lg:w-[100px] h-[80px]">
                     <CldImage
                       className="w-full h-full object-cover"
                       src={post.publicId[0]}
                       alt="Blog Image"
-                      width={140}
-                      height={120}
+                      width={100}
+                      height={80}
                     />
                   </div>
                 ) : (
@@ -98,11 +98,9 @@ const AsideBar = () => {
               >
                 <div className="flex flex-col">
                   <div className="text-[#191919] text-[16px] font-medium">
-                    {post.title.slice(0, 20)}
+                    {post.title.slice(0, 100)}
                   </div>
-                  <div className="text-[#09081f]/70 text-[13px]">
-                    {post.description.slice(0, 50)}...
-                  </div>
+                  
                   <div className="text-[#09081f]/70 text-[13px]">
                     {post.autor} -{" "}
                     <span className="text-[#b4b7c1]">

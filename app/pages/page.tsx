@@ -27,12 +27,10 @@ interface User {
 }
 interface ApiResponse {
   response: {
-    Vlog: Post[]; 
+    Vlog: Post[];
     user: User;
   };
 }
-
-
 
 const BlogsPage = () => {
   const [blogPosts, setBlogPosts] = useState<Post[]>([]);
@@ -40,41 +38,42 @@ const BlogsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const{status, data: session}= useSession()
+  const { status, data: session } = useSession();
 
   useEffect(() => {
     const fetchBlogPosts = async () => {
-      if (status === 'authenticated') {
+      if (status === "authenticated") {
         const user = session?.user?.email;
         if (!user) return;
-  
+
         try {
           const response = await fetch(`/api/users/${user}`);
           if (!response.ok) throw new Error("Failed to fetch blog posts");
-  
+
           const data: ApiResponse = await response.json();
           const userData = data.response;
           const oneUser = userData.user;
           const blogPosts = userData.Vlog;
-  
+
           setUsers([oneUser]);
           setBlogPosts(blogPosts);
-  
         } catch (error) {
           console.error(error);
-          setError(error instanceof Error ? error.message : "An error occurred");
+          setError(
+            error instanceof Error ? error.message : "An error occurred"
+          );
         } finally {
           setLoading(false);
         }
       }
     };
-  
+
     fetchBlogPosts();
   }, [status, session]);
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-[#ecf2fa]">
+      <div className="flex items-center justify-center min-h-screen bg-[#ecf2fa] ">
         <div role="status">
           <svg
             aria-hidden="true"
@@ -104,11 +103,15 @@ const BlogsPage = () => {
 
   return (
     <>
-      <div className="grid h-fit gap-5">
+      <div className="grid h-fit gap-2 ">
         {blogPosts.toReversed().map((post) => (
-          <div key={post.id}>
+          <div
+            key={post.id}
+            className=" my-2"
+          >
             <SingleBlogCard post={post} users={users} key={post.id} />
-            <ModalComponent post={post} />  
+            <ModalComponent post={post} />
+            <hr />
           </div>
         ))}
       </div>

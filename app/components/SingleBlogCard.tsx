@@ -34,7 +34,7 @@ const SingleBlogCard = ({ post, users }: BlogCardProps) => {
   const authorName = author ? author.name : "Unknown Author";
 
   return (
-    <div className="w-full bg-white p-8">
+    <div className="w-full bg-white px-8 pt-6 ">
       <Link href={`/pages/blog/${post.id}-${post.title.replace(/\s+/g, "-")}`}>
         {/* Title */}
         <h1 className="text-[#02234d] text-3xl font-bold leading-[39px] mb-2">
@@ -44,6 +44,7 @@ const SingleBlogCard = ({ post, users }: BlogCardProps) => {
         <div className="text-base font-medium">
           Author -{" "}
           <span className="text-base font-bold text-blue-600 dark:text-black-400 italic font-[Ubuntu]">
+            {authorName}
           </span>
         </div>
       </Link>

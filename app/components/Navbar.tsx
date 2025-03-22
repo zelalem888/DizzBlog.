@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 export default function Navbar() {
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -73,7 +74,7 @@ export default function Navbar() {
            
           </div>}
           {status === 'authenticated' && <div className="text-white text-sm">
-            {session.user?.name}
+            {session.user?.name?.toUpperCase()}
             
           </div>
           }

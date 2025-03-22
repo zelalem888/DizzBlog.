@@ -18,6 +18,18 @@ const ContactForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Construct the mailto URL
+    const subject = encodeURIComponent(`Contact from ${formData.fullName}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.fullName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nMessage: ${formData.message}`
+    );
+    const mailtoLink = `mailto:zlegesse9@gmail.com?subject=${subject}&body=${body}`;
+
+    // Open the user's email client
+    window.location.href = mailtoLink;
+
+    // Optional: Reset form (keeping your original behavior of logging)
     console.log('Form Data:', formData);
   };
 

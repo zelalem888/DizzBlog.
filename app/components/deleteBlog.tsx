@@ -50,7 +50,7 @@ export default function ModalComponent({ post }: ModalComponentProps) {
 
 
   return (
-    <div className="flex ml-10 my-1 gap-6 ">
+    <div className="flex ml-10 my-6 gap-6 ">
       <button
         type="button"
         className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:outline-none font-medium rounded-md text-sm px-5 py-1 text-center"

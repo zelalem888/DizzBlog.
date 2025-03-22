@@ -25,8 +25,8 @@ interface BlogCardProps {
 
 const BlogCard = ({ post, users }: BlogCardProps) => {
   const truncatedDescription =
-    post.description.length > 200
-      ? post.description.slice(0, 200) + "..."
+    post.description.length > 300
+      ? post.description.slice(0, 300) + "..."
       : post.description;
 
   // Find the author's name based on authorId
@@ -34,7 +34,8 @@ const BlogCard = ({ post, users }: BlogCardProps) => {
   const authorName = author ? author.name : "Unknown Author";
 
   return (
-    <div className="w-full bg-white p-8">
+   
+    <div className="w-full bg-white p-6 m-2 shadow-[0_2px_5px_rgb(0,0,0,0.2)]" >
       <Link href={`/pages/blog/${post.id}-${post.title.replace(/\s+/g, "-")}`}>
         {/* Title */}
         <h1 className="text-[#02234d] text-3xl font-bold leading-[39px] mb-2">
@@ -57,7 +58,7 @@ const BlogCard = ({ post, users }: BlogCardProps) => {
             dangerouslySetInnerHTML={{ __html: truncatedDescription }}
           ></p>
           {/* Show "Read More" link if description exceeds 200 characters */}
-          {post.description.length > 200 && (
+          {post.description.length > 300 && (
             <Link
               href={`/pages/blog/${post.id}-${post.title.replace(/\s+/g, "-")}`}
               className="text-[#f2994a] text-sm font-medium mt-2 inline-block hover:underline"

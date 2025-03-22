@@ -47,8 +47,9 @@ export async function POST(request: NextRequest) {
 
     // Validate required fields
     if (!body.title) {
-        return NextResponse.json({ error: "Title is required" }, { status: 400 });
+        return NextResponse.json({ error: "Title and description are required" }, { status: 400 });
     }
+    
 
     try {
         const addVlog = await prisma.vlog.create({
