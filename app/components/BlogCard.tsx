@@ -35,7 +35,7 @@ const BlogCard = ({ post, users }: BlogCardProps) => {
 
   return (
    
-    <div className="w-full bg-white p-6 m-2 shadow-[0_2px_5px_rgb(0,0,0,0.2)]" >
+    <div className="w-full bg-white p-6 m-2" >
       <Link href={`/pages/blog/${post.id}-${post.title.replace(/\s+/g, "-")}`}>
         {/* Title */}
         <h1 className="text-[#02234d] text-3xl font-bold leading-[39px] mb-2">
@@ -83,6 +83,7 @@ const BlogCard = ({ post, users }: BlogCardProps) => {
           <p>No images available</p>
         )}
       </div>
+      <hr />
     </div>
   );
 };
