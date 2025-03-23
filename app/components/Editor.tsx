@@ -33,7 +33,7 @@ import {
 import 'reactjs-tiptap-editor/style.css';
 
 // Default content for the editor
-const DEFAULT = `<h1 style="text-align: left">Rich Text Editor</h1>`;
+const DEFAULT = `<h1 class="headers font-bold text-gray-900 py-4" style="text-align: left"><span style="font-family: ubuntu">write your blog here</span></h1><p style="text-align: left"><span style="font-family: ubuntu">some instruction from the creator (Chuck Norris)</span></p><ul class="list-disc text-gray-700"><li><p style="text-align: left">first<span class="selection"> write the title in the title section</span></p></li><li><p style="text-align: left"><span class="selection">second upload the photo by pressing the upload photo button because it's mandatory</span></p></li><li><p style="text-align: left"><span class="selection">third write your blog in here section</span></p></li><li><p style="text-align: left"><span class="selection">lastly post the blog </span></p></li></ul><p style="text-align: center"><code class="bg-black text-white px-2 py-1 rounded-md overflow-x-auto max-w-full"><span class="selection">thanks</span></code></p><p style="text-align: left"><br class="ProseMirror-trailingBreak"></p>`;
 
 // Configure extensions
 const extensions = [
