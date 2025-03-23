@@ -108,11 +108,11 @@ const SinglePost = () => {
             </div>
 
           <div>
-            <CldImage className="max-w-[500px] max-h-[600px] object-cover"
+            <CldImage className="w-full max-w-lg h-auto md:max-w-md lg:max-w-xl xl:max-w-2xl"
                       src={blogPost.publicId[0]}
                       alt="Blog Image"
-                      width={500}
-                      height={600}/>
+                      width={140}
+                      height={120}/>
           </div>
 
             {/* Article Content */}

@@ -77,12 +77,13 @@ const AsideBar = () => {
         <div className="text-[#02234d] text-3xl font-bold">More News</div>
         <div className="flex flex-col gap-6">
           {blogPosts.slice(-3).reverse().map((post) => (
-            <div key={post.id} className="flex gap-6 py-6">
+            <>
+            <div key={post.id} className="flex gap-3 py-6">
               <div className="w-[100px] h-[80px]">
                 {post.publicId && post.publicId.length > 0 ? (
-                  <div className="w-full lg:w-[100px] h-[80px]">
+                  <div className="lg:w-[100px] h-[80px]">
                     <CldImage
-                      className="w-full h-full object-cover"
+                      className=" max-w-lg h-auto md:max-w-md lg:max-w-xl xl:max-w-2xl"
                       src={post.publicId[0]}
                       alt="Blog Image"
                       width={100}
@@ -98,7 +99,7 @@ const AsideBar = () => {
               >
                 <div className="flex flex-col">
                   <div className="text-[#191919] text-[16px] font-medium">
-                    {post.title.slice(0, 100)}
+                    {post.title.slice(0, 55)}...
                   </div>
                   
                   <div className="text-[#09081f]/70 text-[13px]">
@@ -108,10 +109,15 @@ const AsideBar = () => {
                     </span>
                   </div>
                 </div>
+                
               </Link>
+             
             </div>
+            <hr />
+            </>
           ))}
         </div>
+       
       </div>
     </div>
   );
