@@ -3,14 +3,13 @@ generator client {
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
-
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
   email         String    @unique
   password      String?
@@ -27,17 +26,17 @@ model User {
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String  @db.ObjectId
   type               String
   provider           String
   providerAccountId  String
-  refresh_token      String? @db.Text
-  access_token       String? @db.Text
+  refresh_token      String?
+  access_token       String?
   expires_at         Int?
   token_type         String?
   scope              String?
-  id_token           String? @db.Text
+  id_token           String?
   session_state      String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -47,9 +46,9 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
   sessionToken String   @unique @map("session_token")
-  userId       String
+  userId       String   @db.ObjectId
   expires      DateTime
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -58,12 +57,12 @@ model Session {
 }
 
 model Vlog {
-  id          Int      @id @default(autoincrement())
-  authorId    String
-  title       String   @db.VarChar(255)
-  description String?  @db.Text
-  createdAt   DateTime @default(now())
-  publicId    String[]   @db.VarChar(255)
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  authorId    String    @db.ObjectId
+  title       String
+  description String?
+  createdAt   DateTime  @default(now())
+  publicId    String[]
 
   author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
@@ -71,6 +70,7 @@ model Vlog {
 }
 
 model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
   identifier String
   token      String
   expires    DateTime

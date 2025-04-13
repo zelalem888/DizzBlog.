@@ -1,120 +1,90 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/prisma/client";
 
+// GET vlog data
+export async function GET(request: NextRequest, { params }: any) {
+  try {
+    const param = await params
+    const paramsId = await param.id;
 
-// getting vlog data
-export async function GET(
-    request: NextRequest,
-    { params}: any
-  ) {
-    try {
-      // const params = { id: '6' }
-      // Parse the ID from params
-      const paramsId = params.id;
-  
-      // Fetch the vlog from the database using authorId
-      const vlog = await prisma.vlog.findFirst({
-        where: {
-          id: parseInt(paramsId) , // Use findFirst instead of findUnique
-        },
-      });
-  
-      // If the vlog is not found, return a 404 error
-      if (!vlog) {
-        return NextResponse.json(
-          { error: "Post not found" },
-          { status: 404 }
-        );
-      }
-      const authorId = vlog.authorId
-  
-      // Fetch the user (author) associated with the vlog
-      const user = await prisma.user.findUnique({
-        where: {
-          id: authorId,
-        },
-      });
-  
-      // If the user is not found, return a 404 error
-      if (!user) {
-        return NextResponse.json(
-          { error: "Author not found" },
-          { status: 404 }
-        );
-      }
-  
-      // Combine vlog and user data
-      const response = {
-        ...vlog,
-        authorName: user.name, // Add the author's name to the response
-      };
-  
-      // Return the combined data
-      return NextResponse.json(response, { status: 200 });
-    } catch (error) {
-      console.error("Failed to fetch post:", error);
-      return NextResponse.json(
-        { error: "Failed to fetch post" },
-        { status: 500 }
-      );
-    }
-  }
-
-  //updating vlog data
-
-export async function PUT(request :NextRequest,
-  {params} : any
-  ){
-
-    const body = await request.json();
-    const paramsId = parseInt(params.id);
-
-    if (isNaN(paramsId)) {
-      return NextResponse.json(
-        { error: "Invalid post ID" },
-        { status: 400 }
-      );
-    }
-
-    const getUser = await prisma.vlog.findUnique({
-      where: { id: paramsId },
+    // Fetch the vlog from the database using _id (MongoDB uses string _id)
+    const vlog = await prisma.vlog.findFirst({
+      where: {
+        id: paramsId,
+      },
     });
 
+    if (!vlog) {
+      return NextResponse.json({ error: "Post not found" }, { status: 404 });
+    }
 
-    if(!getUser)
-        return NextResponse.json({ error: "invalid request!" },{ status:400 })
+    const authorId = vlog.authorId;
 
-    const updateUser = await prisma.vlog.update({
-        where: {id : getUser.id},
-        data:{
-            title: body.title,
-            description : body.description,
-        }
-    })
-    return NextResponse.json(updateUser, {status : 200})  
+    const user = await prisma.user.findUnique({
+      where: {
+        id: authorId,
+      },
+    });
 
+    if (!user) {
+      return NextResponse.json({ error: "Author not found" }, { status: 404 });
+    }
+
+    const response = {
+      ...vlog,
+      authorName: user.name,
+    };
+
+    return NextResponse.json(response, { status: 200 });
+  } catch (error) {
+    console.error("Failed to fetch post:", error);
+    return NextResponse.json({ error: "Failed to fetch post" }, { status: 500 });
+  }
 }
 
-// Deleting vlog data
+// PUT - update vlog
+export async function PUT(request: NextRequest, { params }: any) {
+  const body = await request.json();
+  const paramsId = params.id; // No parsing needed for MongoDB string ID
 
-export async function DELETE(request : NextRequest ,{params} : any) {
+  const getUser = await prisma.vlog.findUnique({
+    where: { id: paramsId },
+  });
 
-
-  const deleteUser = await params
-  const findUser  = await prisma.vlog.findFirst({
-    where : {
-      id : parseInt(deleteUser.id)
-    }
+  if (!getUser) {
+    return NextResponse.json({ error: "Invalid request!" }, { status: 400 });
   }
-  )
-  if(!findUser)
-    return NextResponse.json('user not found',{status : 404})
+
+  const updateUser = await prisma.vlog.update({
+    where: { id: paramsId },
+    data: {
+      title: body.title,
+      description: body.description,
+    },
+  });
+
+  return NextResponse.json(updateUser, { status: 200 });
+}
+
+// DELETE vlog
+export async function DELETE(request: NextRequest, { params }: any) {
+  const paramsId = params.id;
+
+  const findUser = await prisma.vlog.findFirst({
+    where: {
+      id: paramsId,
+    },
+  });
+
+  if (!findUser) {
+    return NextResponse.json("User not found", { status: 404 });
+  }
 
   await prisma.vlog.delete({
-    where:{
-      id : findUser.id
-    }
-  })
-  return NextResponse.json('Data Deleted!' , {status : 200})
-  
+    where: {
+      id: paramsId,
+    },
+  });
+
+  return NextResponse.json("Data Deleted!", { status: 200 });
 }

@@ -14,6 +14,7 @@
     "@tiptap/pm": "^2.11.5",
     "@tiptap/react": "^2.11.5",
     "@tiptap/starter-kit": "^2.11.5",
+    "mongodb": "^6.15.0",
     "next": "15.1.6",
     "next-auth": "^5.0.0-beta.25",
     "next-cloudinary": "^6.16.0",

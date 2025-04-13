@@ -2,8 +2,6 @@
 import Image from 'next/image';
 // import Link from 'next/link';
 import { signIn } from '@/app/auth';
-
-
 const LoginPopup = () => {
   return (
     <div className="min-h-screen flex flex-col">

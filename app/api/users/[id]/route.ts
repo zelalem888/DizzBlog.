@@ -5,8 +5,6 @@ export async function GET(
   request: Request,
   { params }: any
 ) {
-
-  console.log(params);
   
   try {
     const awaitedParams = await params
